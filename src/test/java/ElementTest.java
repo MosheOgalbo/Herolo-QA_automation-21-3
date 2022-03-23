@@ -12,6 +12,7 @@ public class ElementTest {
     public static By DialogPanel(){
         return By.id("modal-form");
     }
+
     public static WebElement buttonToReceivingCall(WebDriver driver){
         return driver.findElement(ElementTest.DialogPanel()).findElement(By.tagName("button"));
     }

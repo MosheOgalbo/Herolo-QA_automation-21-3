@@ -26,11 +26,7 @@ public class OpenSystem {
     }
 
     @Test
-<<<<<<< HEAD
     public void SendDetailsInPopup() throws InterruptedException {
-=======
-    public void SendDetailsInPopup(){
->>>>>>> origin/main
         //TestFunctions.PartialExecutionOfSendingDataForContact(driver,"moshe","mos@gmail.com","0537169998");
         TestFunctions.NegativeExecutionOfDataTransmission(driver,"moshe","sdfsdg","fdsfds");
 

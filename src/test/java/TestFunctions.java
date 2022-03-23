@@ -2,8 +2,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.util.List;
-import org.openqa.selenium.*;
-import org.apache.commons.io.FileUtils;
 
 public class TestFunctions {
     public static void waitDialogPanel(WebDriver driver){
@@ -29,11 +27,23 @@ public class TestFunctions {
         System.out.println(ElementTest.SuccessMessage(driver));
         driver.navigate().back();
     }
-    public static void NegativeExecutionOfDataTransmission(WebDriver driver,String name,String email,String phone) {
+    public static void NegativeExecutionOfDataTransmission(WebDriver driver,String name,String email,String phone){
         waitDialogPanel(driver);
         actionsInWindowOfForInformation(driver,name,email,phone);
-        String c= ElementTest.dataSendingFields(driver).get(1).getText();
-        System.out.println(c);
+        List<WebElement> errorMessages = driver.findElement(ElementTest.DialogPanel()).
+                findElements(By.tagName("span"));
+        String MessageText []= new String[3];
+        MessageText[0] = errorMessages.get(0).getText();
+        MessageText[1] = errorMessages.get(1).getText();
+
+        if (MessageText.equals(TestString.PhoneNumberText)&&MessageText.equals(TestString.EmailAddressText)){
+            System.out.println("kk");
+        }
+        else {
+            System.out.println("rr");
+
+        }
+        System.out.println("");
 
     }
 }
