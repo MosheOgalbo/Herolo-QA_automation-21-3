@@ -2,9 +2,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import java.util.List;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.*;
-import java.util.Collections;
+import org.openqa.selenium.*;
+import org.apache.commons.io.FileUtils;
 
 public class TestFunctions {
     public static void waitDialogPanel(WebDriver driver){
@@ -30,23 +29,11 @@ public class TestFunctions {
         System.out.println(ElementTest.SuccessMessage(driver));
         driver.navigate().back();
     }
-
-    public static void NegativeExecutionOfDataTransmission(WebDriver driver, String name, String email, String phone) throws InterruptedException {
+    public static void NegativeExecutionOfDataTransmission(WebDriver driver,String name,String email,String phone) {
         waitDialogPanel(driver);
         actionsInWindowOfForInformation(driver,name,email,phone);
-        try {
-            List<WebElement> v = driver.findElement(By.id("modal-form")).findElements(By.tagName("span"));
-            String[] message = new String[2];
-            message[0] = v.get(0).getText();
-            message[1] = v.get(1).getText();
-            if (message[0].equals(TestString.EmailAddressText) && message[1].equals(TestString.PhoneNumberText)) {
-                System.out.println("tro");
-            } else {
-                System.out.println("no");
+        String c= ElementTest.dataSendingFields(driver).get(1).getText();
+        System.out.println(c);
 
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
