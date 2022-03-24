@@ -26,4 +26,7 @@ public class ElementTest {
     public static String SuccessMessage(WebDriver driver){
         return driver.findElement(By.xpath("//*[@id='gatsby-focus-wrapper']/div/main/div[1]/div[2]")).getText();
     }
+    public static List<WebElement> errorMessages(WebDriver driver){
+        return driver.findElement(ElementTest.DialogPanel()).findElements(By.tagName("span"));
+    }
 }
