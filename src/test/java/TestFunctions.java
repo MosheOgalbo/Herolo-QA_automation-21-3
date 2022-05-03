@@ -1,13 +1,17 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
 import static java.lang.Thread.sleep;
 
 public class TestFunctions {
     public static void waitDialogPanel(WebDriver driver){
         Driver.waitDrivervisibilityOfElement(driver,ElementTest.DialogPanel());
-        driver.findElement(ElementTest.DialogPanel()).click();
+        //driver.findElement(ElementTest.DialogPanel()).click();
     }
     public static void waitingWindowSuccessExecution(WebDriver driver){
         Driver.waitInvisibilityOfElementLocated(driver,ElementTest.DialogPanel());
@@ -17,7 +21,14 @@ public class TestFunctions {
         ElementTest.dataSendingFields(driver).get(0).clear();
         ElementTest.dataSendingFields(driver).get(1).clear();
         ElementTest.dataSendingFields(driver).get(2).clear();
+        if (null == ElementTest.dataSendingFields(driver).get(2).getText()){
+            ClearFieldsOnPopup(driver);
+        }
+        else {
+            System.out.println("null");
+        }
     }
+
     public static void actionsInWindowOfForInformation(WebDriver driver,String name,String email,String phone) {
         ClearFieldsOnPopup(driver);
         ElementTest.dataSendingFields(driver).get(0).sendKeys(name);
@@ -32,6 +43,7 @@ public class TestFunctions {
         waitingWindowSuccessExecution(driver);
         Driver.waitDrivervisibilityOfElement(driver,ElementTest.jugglingSuccess());
         System.out.println(ElementTest.SuccessMessage(driver));
+
         driver.navigate().back();
     }
     /** The function types in all the fields in the pop-up window and returns whether there is a valid message **/
@@ -40,20 +52,30 @@ public class TestFunctions {
         actionsInWindowOfForInformation(driver, name, email, phone);
         if (checkForErrorMessage(driver)){
             if (ReceiveTextMessages(driver)[0].equals(TestString.PhoneNumberText)&&
-                    ReceiveTextMessages(driver)[1].equals(TestString.EmailAddressText)) {
+                    ReceiveTextMessages(driver)[0].equals(TestString.EmailAddressText)) {
+                ClearFieldsOnPopup(driver);
                 return TestString.TextMatchSucceeded ;
             }
+            else if (ReceiveTextMessages(driver)[1].equals(TestString.EmailAddressText)){
+                ClearFieldsOnPopup(driver);
+                return TestString.NoErrorMessageInAllFields;
+
+            }
             else {
-             return TestString.NoTextMatchSucceeded;
+                ClearFieldsOnPopup(driver);
+                return TestString.NoTextMatchSucceeded;
             }
         }
         else {
+            ClearFieldsOnPopup(driver);
             return TestString.NoMessage;
         }
+
     }
     public static boolean checkForErrorMessage(WebDriver driver){
         try {
-            if (ElementTest.errorMessages(driver).get(0).isDisplayed()){
+            if (ElementTest.errorMessages(driver).get(1).isDisplayed()|| ElementTest.errorMessages(driver).get(2).isDisplayed()||
+            ElementTest.errorMessages(driver).get(3).isDisplayed()){
                 return true;
             }
             else{
@@ -72,6 +94,7 @@ public class TestFunctions {
         MessageText[2] = ElementTest.errorMessages(driver).get(2).getText();
         return MessageText;
     }
+    //לא מוכן 
     public static void NegativeExecutionOfDataTransmissionNotAllFields(WebDriver driver,
                                                                        String name,String email,String phone){
         waitDialogPanel(driver);

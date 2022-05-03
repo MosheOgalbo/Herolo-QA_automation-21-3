@@ -4,6 +4,7 @@ public class TestString {
     public static String TextMatchSucceeded ="Messages that match the text";
     public static String NoTextMatchSucceeded =" Messages do not match the text";
     public static String NoMessage = "There are no element messages";
+    public static String NoErrorMessageInAllFields="There is no error message in the email field";
 
 
 }
